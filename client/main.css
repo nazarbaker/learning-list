@@ -1,1 +1,26 @@
-/* CSS declarations go here */
+/* start reset styles */
+html, body {
+  margin: 0!important;
+}
+
+/* media query */
+@media (max-width: 1000px) {
+  .tab {
+    display: block !important;
+    float: left;
+    width: 50% !important;
+  }
+
+  .tabs > div:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@media (max-width: 600px) {
+  .tab {
+    float: none;
+    width: 100% !important;
+  }
+}

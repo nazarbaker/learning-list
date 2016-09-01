@@ -7,8 +7,8 @@ const styles = {
     paddingTop: 16,
     marginBottom: 12,
     fontWeight: 400,
-  },
-};
+  }
+}
 
 class Dashboard extends React.Component {
 
@@ -16,25 +16,51 @@ class Dashboard extends React.Component {
     super(props);
     this.state = {
       value: 'a',
+      windowWidth: window.innerWidth,
+      stylesInk: { background: 'black' }
     };
     this.handleChange = this.handleChange.bind(this)
+    this.handleResize = this.handleResize.bind(this)
   }
 
+  // this block make imitation media query for material-ui :)
+  // use only generated elements!
+  handleResize(e) {
+    this.setState(
+      window.innerWidth > 1000 ?
+        {stylesInk: {background: "red"}} : {stylesInk: {background: "none"}})
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize)
+  }
+
+// handle check tabs
   handleChange(value) {
     this.setState({
-      value: value,
-    });
-  };
+      value: value
+    })
+  }
 
   render() {
     return (
       <Tabs
-        value={this.state.value}
-        onChange={this.handleChange}
+        value = { this.state.value }
+        onChange = { this.handleChange }
+        className = "tabs"
+        inkBarStyle	= { this.state.stylesInk }
       >
-        <Tab label="Languages/Technologies" value="a" >
+        <Tab
+          label = 'Languages/Technologies'
+          value = 'a'
+          className = 'tab'
+          >
           <div>
-            <h2 style={styles.headline}>Languages / Technologies</h2>
+            <h2 style = { styles.headline }>Languages / Technologies</h2>
             <p>
               •    Technical Documentation<br />
               •    Ruby<br />
@@ -51,9 +77,13 @@ class Dashboard extends React.Component {
             </p>
           </div>
         </Tab>
-        <Tab label="Database" value="b">
+        <Tab
+          label = 'Database/Web Servers'
+          value = 'b'
+          className = 'tab'
+          >
           <div>
-            <h2 style={styles.headline}>Database Management Systems</h2>
+            <h2 style = { styles.headline }>Database Management Systems</h2>
             <p>
               •    MySQL<br />
               •    PostgreSQL<br />
@@ -66,22 +96,15 @@ class Dashboard extends React.Component {
             </p>
           </div>
         </Tab>
-        <Tab label="Web Servers" value="c" >
+
+        <Tab
+          label = 'Methodologies/Science/Design'
+          value = 'c'
+          className = 'tab'
+          style = { styles.tab }
+          >
           <div>
-            <h2 style={styles.headline}>Web Servers</h2>
-            <p>
-              •    Apache<br />
-              •    Nginx<br />
-              •    Unicorn<br />
-              •    Puma<br />
-              •    Thin server<br />
-              •    WSGI Servers<br />
-            </p>
-          </div>
-        </Tab>
-        <Tab label="Methodologies" value="d">
-          <div>
-            <h2 style={styles.headline}>Methodologies</h2>
+            <h2 style = { styles.headline }>Methodologies</h2>
             <p>
               •    Agile, SCRUM<br />
               •    TDD, BDD<br />
@@ -92,18 +115,13 @@ class Dashboard extends React.Component {
             </p>
           </div>
         </Tab>
-        <Tab label="Science & Design" value="e" >
-          <div>
-            <h2 style={styles.headline}>Computer Science and Design</h2>
-            <p>
-              •    OOP concepts<br />
-              •    Design Patterns<br />
-              •    SOLID<br />
-              •    GRASP<br />
-            </p>
-          </div>
-        </Tab>
-        <Tab label="Platforms/Frameworks/Tools" value="f">
+
+        <Tab
+          label = 'Platforms/Frameworks/Tools'
+          value = 'd'
+          className = 'tab'
+          style = { styles.tab }
+          >
           <div>
             <h2 style={styles.headline}>Platforms / Frameworks / Tools</h2>
             <p>
