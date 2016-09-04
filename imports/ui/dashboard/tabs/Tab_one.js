@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
+import { createContainer } from 'meteor/react-meteor-data'
 
-import LearnItem from '../Learn_item.js'
+// connect db
+import { LearningLanguages } from '../../../api/learning_languages.js'
+
+import LearningItem from '../Learning_item.js'
 
 const styles = {
   headline: {
@@ -12,20 +16,20 @@ const styles = {
   }
 }
 
-class TabOne extends React.Component {
-  getLearnItem() {
-    return [
-      { _id: 1, text: 'JavaScript' },
-      { _id: 2, text: 'HTML' },
-      { _id: 3, text: 'CSS' },
-      { _id: 4, text: 'Php' },
-      { _id: 5, text: 'Ruby' }
-    ]
-  }
+class TabOne extends Component {
+  // getLearnItem() {
+  //   return [
+  //     { _id: 1, text: 'JavaScript' },
+  //     { _id: 2, text: 'HTML' },
+  //     { _id: 3, text: 'CSS' },
+  //     { _id: 4, text: 'Php' },
+  //     { _id: 5, text: 'Ruby' }
+  //   ]
+  // }
 
   renderLearnItems() {
-    return this.getLearnItem().map((item) => (
-      <LearnItem key = { item._id } item = { item } />
+    return this.props.learningLanguages.map((item) => (
+      <LearningItem key = { item._id } item = { item } />
     ))
   }
 
@@ -41,4 +45,13 @@ class TabOne extends React.Component {
   }
 
 }
-export default TabOne
+
+TabOne.propTypes = {
+  learningLanguages: PropTypes.array.isRequired,
+};
+
+export default createContainer(() => {
+  return {
+    learningLanguages: LearningLanguages.find({}).fetch(),
+  }
+}, TabOne)

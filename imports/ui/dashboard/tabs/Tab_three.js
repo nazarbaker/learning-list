@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
+import { createContainer } from 'meteor/react-meteor-data'
 
-import LearnItem from '../Learn_item.js'
+// connect db
+import { LearningMethodologies } from '../../../api/learning_methodologies.js'
+
+import LearningItem from '../Learning_item.js'
 
 const styles = {
   headline: {
@@ -13,20 +17,20 @@ const styles = {
 }
 
 class TabThree extends React.Component {
-  getLearnItem() {
-    return [
-      { _id: 1, text: 'Agile, SCRUM' },
-      { _id: 2, text: 'TDD, BDD' },
-      { _id: 3, text: 'Dry' },
-      { _id: 4, text: 'KISS' },
-      { _id: 5, text: 'FDD' },
-      { _id: 6, text: '12 Factor Application' }
-    ]
-  }
+  // getLearnItem() {
+  //   return [
+  //     { _id: 1, text: 'Agile, SCRUM' },
+  //     { _id: 2, text: 'TDD, BDD' },
+  //     { _id: 3, text: 'Dry' },
+  //     { _id: 4, text: 'KISS' },
+  //     { _id: 5, text: 'FDD' },
+  //     { _id: 6, text: '12 Factor Application' }
+  //   ]
+  // }
 
   renderLearnItems() {
-    return this.getLearnItem().map((item) => (
-      <LearnItem key = { item._id } item = { item } />
+    return this.props.learningMethodologies.map((item) => (
+      <LearningItem key = { item._id } item = { item } />
     ))
   }
 
@@ -40,6 +44,14 @@ class TabThree extends React.Component {
       </div>
     )
   }
-
 }
-export default TabThree
+
+TabThree.propTypes = {
+  learningMethodologies: PropTypes.array.isRequired,
+}
+
+export default createContainer(() => {
+  return {
+    learningMethodologies: LearningMethodologies.find({}).fetch(),
+  }
+}, TabThree)
