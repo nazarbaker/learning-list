@@ -5,7 +5,7 @@ import { createContainer } from 'meteor/react-meteor-data'
 // connect db
 import { LearningLanguages } from '../../../api/learning_languages.js'
 
-import LearnItem from '../Learn_item.js'
+import LearningItem from '../Learning_item.js'
 
 const styles = {
   headline: {
@@ -29,7 +29,7 @@ class TabOne extends Component {
 
   renderLearnItems() {
     return this.props.learningLanguages.map((item) => (
-      <LearnItem key = { item._id } item = { item } />
+      <LearningItem key = { item._id } item = { item } />
     ))
   }
 
@@ -53,5 +53,5 @@ TabOne.propTypes = {
 export default createContainer(() => {
   return {
     learningLanguages: LearningLanguages.find({}).fetch(),
-  };
-}, TabOne);
+  }
+}, TabOne)

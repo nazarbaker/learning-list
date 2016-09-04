@@ -1,7 +1,7 @@
 import React from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
 
-import LearnItem from '../Learn_item.js'
+import LearningItem from '../Learning_item.js'
 
 const styles = {
   headline: {
@@ -32,7 +32,7 @@ class TabFour extends React.Component {
 
   renderLearnItems() {
     return this.getLearnItem().map((item) => (
-      <LearnItem key = { item._id } item = { item } />
+      <LearningItem key = { item._id } item = { item } />
     ))
   }
 
