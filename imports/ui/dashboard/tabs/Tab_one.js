@@ -29,7 +29,7 @@ class TabOne extends Component {
 
   renderLearnItems() {
     return this.props.learningLanguages.map((item) => (
-      <LearningItem key = { item._id } item = { item } />
+      <LearningItem key = { item._id } item = { item }  root = 'languages'/>
     ))
   }
 

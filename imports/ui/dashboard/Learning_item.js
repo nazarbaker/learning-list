@@ -4,7 +4,11 @@ import React, { Component, PropTypes } from 'react'
 export default class LearningItem extends Component {
   render() {
     return (
-      <li>{ this.props.item.text }</li>
+      <li>
+        <a href = { this.props.root + '/' + this.props.item.text }>
+          { this.props.item.text }
+        </a>
+      </li>
     )
   }
 }
