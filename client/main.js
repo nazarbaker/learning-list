@@ -7,7 +7,8 @@ import { mount } from 'react-mounter'
 import App from '../imports/ui/App.js'
 import Dashboard from '../imports/ui/dashboard/Dashboard.js'
 import Admin from '../imports/ui/admin/Admin.js'
-import Languages from '../imports/ui/languages/Languages.js'
+
+import Subject from '../imports/ui/subjects/Subject.js'
 
 FlowRouter.route("/", {
   action() {
@@ -25,10 +26,10 @@ FlowRouter.route("/admin", {
   }
 })
 
-FlowRouter.route('/languages/:language', {
+FlowRouter.route('/:topics/:subject', {
   action(params) {
     mount(App, {
-      content: (<Languages language = { params.language }/>)
+      content: (<Subject subject = { params.subject } />)
     })
   }
 })

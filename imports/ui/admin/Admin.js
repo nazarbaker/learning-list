@@ -5,10 +5,7 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 // connect database
-import { LearningLanguages } from '../../api/learning_languages.js'
-import { LearningDatabases } from '../../api/learning_databases.js'
-import { LearningMethodologies } from '../../api/learning_methodologies.js'
-import { LearningPlatforms } from '../../api/learning_platforms.js'
+import { LearningTopics } from '../../api/learning_topics.js'
 
 export default class Admin extends React.Component {
   constructor(props) {
@@ -29,15 +26,7 @@ export default class Admin extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
 
-    if (this.state.value == 'languages') {
-      LearningLanguages.insert({ text: this.topicInput.input.value })
-    } else if (this.state.value == 'databases') {
-      LearningDatabases.insert({ text: this.topicInput.input.value })
-    } else if (this.state.value == 'methodologies') {
-      LearningMethodologies.insert({ text: this.topicInput.input.value })
-    } else if (this.state.value == 'platforms') {
-      LearningPlatforms.insert({ text: this.topicInput.input.value })
-    }
+    LearningTopics.insert({ topic: this.state.value, subject: this.topicInput.input.value })
   }
 
   render() {

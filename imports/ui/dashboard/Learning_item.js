@@ -5,8 +5,8 @@ export default class LearningItem extends Component {
   render() {
     return (
       <li>
-        <a href = { this.props.root + '/' + this.props.item.text }>
-          { this.props.item.text }
+        <a href = { this.props.item.topic + '/' + this.props.item.subject }>
+          { this.props.item.subject }
         </a>
       </li>
     )

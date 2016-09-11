@@ -3,7 +3,7 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import { createContainer } from 'meteor/react-meteor-data'
 
 // connect db
-import { LearningLanguages } from '../../../api/learning_languages.js'
+import { LearningTopics } from '../../../api/learning_topics.js'
 
 import LearningItem from '../Learning_item.js'
 
@@ -17,19 +17,10 @@ const styles = {
 }
 
 class TabOne extends Component {
-  // getLearnItem() {
-  //   return [
-  //     { _id: 1, text: 'JavaScript' },
-  //     { _id: 2, text: 'HTML' },
-  //     { _id: 3, text: 'CSS' },
-  //     { _id: 4, text: 'Php' },
-  //     { _id: 5, text: 'Ruby' }
-  //   ]
-  // }
 
   renderLearnItems() {
-    return this.props.learningLanguages.map((item) => (
-      <LearningItem key = { item._id } item = { item }  root = 'languages'/>
+    return this.props.learningTopics.map((item) => (
+      <LearningItem key = { item._id } item = { item } />
     ))
   }
 
@@ -43,15 +34,14 @@ class TabOne extends Component {
       </div>
     )
   }
-
 }
 
 TabOne.propTypes = {
-  learningLanguages: PropTypes.array.isRequired,
+  learningTopics: PropTypes.array.isRequired,
 };
 
 export default createContainer(() => {
   return {
-    learningLanguages: LearningLanguages.find({}).fetch(),
+    learningTopics: LearningTopics.find({topic: 'languages'}).fetch(),
   }
 }, TabOne)

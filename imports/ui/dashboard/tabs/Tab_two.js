@@ -3,7 +3,7 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import { createContainer } from 'meteor/react-meteor-data'
 
 // connect db
-import { LearningDatabases } from '../../../api/learning_databases.js'
+import { LearningTopics } from '../../../api/learning_topics.js'
 
 import LearningItem from '../Learning_item.js'
 
@@ -17,19 +17,9 @@ const styles = {
 }
 
 class TabTwo extends React.Component {
-  // getLearnItem() {
-  //   return [
-  //     { _id: 1, text: 'MySQL' },
-  //     { _id: 2, text: 'PostgreSQL' },
-  //     { _id: 3, text: 'Sqlite' },
-  //     { _id: 4, text: 'MongoDB' },
-  //     { _id: 5, text: 'Redis' },
-  //     { _id: 6, text: 'Amazon RDS' }
-  //   ]
-  // }
 
   renderLearnItems() {
-    return this.props.learningDatabases.map((item) => (
+    return this.props.learningTopics.map((item) => (
       <LearningItem key = { item._id } item = { item } />
     ))
   }
@@ -44,15 +34,14 @@ class TabTwo extends React.Component {
       </div>
     )
   }
-
 }
 
 TabTwo.propTypes = {
-  learningDatabases: PropTypes.array.isRequired,
+  learningTopics: PropTypes.array.isRequired,
 };
 
 export default createContainer(() => {
   return {
-    learningDatabases: LearningDatabases.find({}).fetch(),
+    learningTopics: LearningTopics.find({topic: 'databases'}).fetch(),
   }
 }, TabTwo)
