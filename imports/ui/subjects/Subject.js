@@ -6,11 +6,11 @@ import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 
 // connect db
-import { LanguagesLinks } from '../../api/languages_links.js'
+import { SubjectLinks } from '../../api/subject_links.js'
+// components
+import SubjectLink from '../Subject_link.js'
 
-import LanguagesItem from '../Languages_item.js'
-
-class Languages extends Component {
+class Subject extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -19,19 +19,19 @@ class Languages extends Component {
   handleSubmit(event) {
     event.preventDefault()
     // save link in db
-    LanguagesLinks.insert({ type: this.props.language, link: this.linkInput.input.value, description: this.descriptionInput.input.value, rating: 0 })
+    SubjectLinks.insert({ type: this.props.subject, link: this.linkInput.input.value, description: this.descriptionInput.input.value, rating: 0 })
   }
 
   renderLanguages() {
-    return this.props.languagesLinks.map((item) => (
-      <LanguagesItem key = { item._id } item = { item } />
+    return this.props.subjectLinks.map((item) => (
+      <SubjectLink key = { item._id } item = { item } />
     ))
   }
 
   render() {
     return (
       <div>
-        <h1>{ this.props.language }</h1>
+        <h1>{ this.props.subject }</h1>
 
         <form onSubmit = { this.handleSubmit } >
           <TextField
@@ -56,14 +56,14 @@ class Languages extends Component {
   }
 }
 
-Languages.propTypes = {
-  languagesLinks: PropTypes.array.isRequired,
+Subject.propTypes = {
+  subjectLinks: PropTypes.array.isRequired,
 };
 
 export default createContainer(() => {
-  const language = FlowRouter.getParam('language');
+  const subject = FlowRouter.getParam('subject');
 
   return {
-    languagesLinks: LanguagesLinks.find({type: language}).fetch()
+    subjectLinks: SubjectLinks.find({type: subject}).fetch()
   }
-}, Languages)
+}, Subject)

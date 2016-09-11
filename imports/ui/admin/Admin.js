@@ -26,7 +26,7 @@ export default class Admin extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
 
-    LearningTopics.insert({ topic: this.state.value, name: this.topicInput.input.value })
+    LearningTopics.insert({ topic: this.state.value, subject: this.topicInput.input.value })
   }
 
   render() {
