@@ -13,23 +13,9 @@ export default class LanguagesItem extends Component {
 
   render() {
     return (
-      <Paper
-        zDepth = { 2 }
-        >
-        <List>
-          <ListItem primaryText={this.props.item.text} leftIcon={<ContentInbox />} />
-          <ListItem primaryText="Starred" leftIcon={<ActionGrade />} />
-          <ListItem primaryText="Sent mail" leftIcon={<ContentSend />} />
-          <ListItem primaryText="Drafts" leftIcon={<ContentDrafts />} />
-          <ListItem primaryText="Inbox" leftIcon={<ContentInbox />} />
-        </List>
-        <Divider />
-        <List>
-          <ListItem primaryText="All mail" rightIcon={<ActionInfo />} />
-          <ListItem primaryText="Trash" rightIcon={<ActionInfo />} />
-          <ListItem primaryText="Spam" rightIcon={<ActionInfo />} />
-          <ListItem primaryText="Follow up" rightIcon={<ActionInfo />} />
-        </List>
+      <Paper zDepth = { 2 } >
+        <a href = { this.props.item.link } >{ this.props.item.description }</a>
+        <div>{ this.props.item.rating }</div>
       </Paper>
     )
   }
