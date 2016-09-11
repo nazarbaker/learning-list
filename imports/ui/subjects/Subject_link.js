@@ -14,6 +14,7 @@ export default class SubjectLink extends Component {
     super(props)
     this.increaseRating = this.increaseRating.bind(this)
     this.decreaseRating = this.decreaseRating.bind(this)
+    this.deleteThisSubject = this.deleteThisSubject.bind(this)
   }
 
   increaseRating(event) {
@@ -24,13 +25,22 @@ export default class SubjectLink extends Component {
     SubjectLinks.update({ _id: this.props.item._id }, {$inc: { rating: -1} })
   }
 
+  deleteThisSubject() {
+    SubjectLinks.remove(this.props.item._id);
+  }
+
   render() {
     return (
       <Paper
         zDepth = { 2 }
         style = { styles.linkWrapper }
         >
+        <button onClick = { this.deleteThisSubject } >
+          &times;
+        </button>
+
         <a href = { this.props.item.link } >{ this.props.item.description }</a>
+
         <div>
           <FloatingActionButton
             mini = { true }
