@@ -22,6 +22,8 @@ class Subject extends Component {
     event.preventDefault()
     // save link in db
     SubjectLinks.insert({ type: this.props.subject, link: this.linkInput.input.value, description: this.descriptionInput.input.value, rating: 0 })
+    this.linkInput.input.value = null
+    this.descriptionInput.input.value = null
   }
 
   renderLanguages() {
@@ -66,6 +68,6 @@ export default createContainer(() => {
   const subject = FlowRouter.getParam('subject');
 
   return {
-    subjectLinks: SubjectLinks.find({type: subject}).fetch()
+    subjectLinks: SubjectLinks.find({type: subject}, { sort: { rating: -1 } }).fetch()
   }
 }, Subject)
