@@ -8,7 +8,9 @@ import FlatButton from 'material-ui/FlatButton'
 // connect db
 import { SubjectLinks } from '../../api/subject_links.js'
 // components
-import SubjectLink from '../Subject_link.js'
+import SubjectLink from './Subject_link.js'
+// styles
+import styles from './assets/styles.js'
 
 class Subject extends Component {
   constructor(props) {
