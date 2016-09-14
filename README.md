@@ -7,3 +7,7 @@
 
     meteor npm install --save react-addons-pure-render-mixin
     meteor add react-meteor-data
+
+#### Add user account
+
+    meteor add accounts-ui accounts-password
