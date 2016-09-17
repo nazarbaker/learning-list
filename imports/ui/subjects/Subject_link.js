@@ -4,6 +4,10 @@ import Paper from 'material-ui/Paper'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import ContentRemove from 'material-ui/svg-icons/content/remove'
+import Checkbox from 'material-ui/Checkbox';
+import ActionFavorite from 'material-ui/svg-icons/action/favorite';
+import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
+
 // connect db
 import { SubjectLinks } from '../../api/subject_links.js'
 // styles
@@ -12,17 +16,38 @@ import { styles } from './assets/styles.js'
 export default class SubjectLink extends Component {
   constructor(props) {
     super(props)
-    this.increaseRating = this.increaseRating.bind(this)
-    this.decreaseRating = this.decreaseRating.bind(this)
+    this.state = {
+      like: (this.props.currentUser.profile.likedItems.indexOf(this.props.item._id) !== -1)
+    }
+
+    this.handleLike = this.handleLike.bind(this)
     this.deleteThisSubject = this.deleteThisSubject.bind(this)
   }
 
-  increaseRating() {
-    SubjectLinks.update({ _id: this.props.item._id }, {$inc: { rating: 1} })
-  }
+  handleLike(event, value) {
+    let itemId = this.props.item._id
 
-  decreaseRating() {
-    SubjectLinks.update({ _id: this.props.item._id }, {$inc: { rating: -1} })
+    if (value) {
+      this.setState({ like: true })
+      SubjectLinks.update({ _id: itemId }, {$inc: { rating: 1} })
+      Accounts.users.update(
+        {
+          _id: Accounts.userId()
+        }, {
+          $addToSet: { 'profile.likedItems': itemId }
+        }
+      )
+    } else {
+      this.setState({ like: false })
+      SubjectLinks.update({ _id: this.props.item._id }, {$inc: { rating: -1} })
+      Accounts.users.update(
+        {
+          _id: Accounts.userId()
+        }, {
+          $pull: { 'profile.likedItems': itemId }
+        }
+      )
+    }
   }
 
   deleteThisSubject() {
@@ -47,21 +72,12 @@ export default class SubjectLink extends Component {
 
         { this.props.currentUser ?
         <div>
-          <FloatingActionButton
-            mini = { true }
-            style = { styles.mgRight }
-            onClick = { this.increaseRating }
-            >
-            <ContentAdd />
-          </FloatingActionButton>
-
-          <FloatingActionButton
-            mini = { true }
-            style = { styles.mgRight }
-            onClick = { this.decreaseRating }
-            >
-            <ContentRemove />
-          </FloatingActionButton>
+          <Checkbox
+            checkedIcon = { <ActionFavorite /> }
+            uncheckedIcon = { <ActionFavoriteBorder /> }
+            onCheck = { this.handleLike }
+            checked = { this.state.like }
+          />
         </div>
         :
         <div></div>
