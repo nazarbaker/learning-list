@@ -21,14 +21,20 @@ class Subject extends Component {
   handleSubmit(event) {
     event.preventDefault()
     // save link in db
-    SubjectLinks.insert({ type: this.props.subject, link: this.linkInput.input.value, description: this.descriptionInput.input.value, rating: 0 })
+    SubjectLinks.insert({
+      type: this.props.subject,
+      link: this.linkInput.input.value,
+      description: this.descriptionInput.input.value,
+      createdBy: this.props.currentUser,
+      rating: 0
+    })
     this.linkInput.input.value = null
     this.descriptionInput.input.value = null
   }
 
   renderLanguages() {
     return this.props.subjectLinks.map((item) => (
-      <SubjectLink key = { item._id } item = { item } />
+      <SubjectLink key = { item._id } item = { item } currentUser = { this.props.currentUser }/>
     ))
   }
 
@@ -37,6 +43,7 @@ class Subject extends Component {
       <div>
         <h1>{ this.props.subject }</h1>
 
+        { this.props.currentUser ?
         <form onSubmit = { this.handleSubmit } >
           <TextField
             floatingLabelText = 'add link'
@@ -53,6 +60,9 @@ class Subject extends Component {
             label = 'Create'
             primary = { true }/>
         </form>
+        :
+        <div></div>
+        }
 
         { this.renderLanguages() }
       </div>
@@ -68,6 +78,7 @@ export default createContainer(() => {
   const subject = FlowRouter.getParam('subject');
 
   return {
-    subjectLinks: SubjectLinks.find({type: subject}, { sort: { rating: -1 } }).fetch()
+    subjectLinks: SubjectLinks.find({type: subject}, { sort: { rating: -1 } }).fetch(),
+    currentUser: Meteor.user()
   }
 }, Subject)
