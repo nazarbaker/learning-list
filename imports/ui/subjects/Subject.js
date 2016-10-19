@@ -15,21 +15,41 @@ import styles from './assets/styles.js'
 class Subject extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      linkError: '',
+      descriptionError: ''
+    }
+
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.deleteErrors = this.deleteErrors.bind(this)
   }
 
   handleSubmit(event) {
     event.preventDefault()
-    // save link in db
-    SubjectLinks.insert({
-      type: this.props.subject,
-      link: this.linkInput.input.value,
-      description: this.descriptionInput.input.value,
-      createdBy: this.props.currentUser,
-      rating: 0
-    })
-    this.linkInput.input.value = null
-    this.descriptionInput.input.value = null
+    if (this.linkInput.input.value && this.descriptionInput.input.value) {
+      // save link in db
+      SubjectLinks.insert({
+        type: this.props.subject,
+        link: this.linkInput.input.value,
+        description: this.descriptionInput.input.value,
+        createdBy: this.props.currentUser,
+        rating: 0
+      })
+      this.linkInput.input.value = null
+      this.descriptionInput.input.value = null
+    } else {
+      this.setState({
+        linkError: this.linkInput.input.value ? '' : 'This field is required.',
+        descriptionError: this.descriptionInput.input.value ? '' : 'This field is required.'
+      });
+    }
+  }
+
+  deleteErrors() {
+    this.setState({
+      linkError: '',
+      descriptionError: ''
+    });
   }
 
   renderLanguages() {
@@ -48,17 +68,22 @@ class Subject extends Component {
           <TextField
             floatingLabelText = 'add link'
             ref = { (ref) => this.linkInput = ref }
+            errorText = { this.state.linkError }
+            onFocus = { this.deleteErrors }
           />
           <br />
           <TextField
             floatingLabelText  = 'Description'
             ref = { (ref) => this.descriptionInput = ref }
+            errorText = { this.state.descriptionError }
+            onFocus = { this.deleteErrors }
           />
           <br />
           <FlatButton
             type = 'submit'
             label = 'Create'
-            primary = { true }/>
+            primary = { true }
+          />
         </form>
         :
         <div></div>
