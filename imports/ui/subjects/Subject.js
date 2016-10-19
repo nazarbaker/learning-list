@@ -10,7 +10,7 @@ import { SubjectLinks } from '../../api/subject_links.js'
 // components
 import SubjectLink from './Subject_link.js'
 // styles
-import styles from './assets/styles.js'
+import { styles } from './assets/styles.js'
 
 class Subject extends Component {
   constructor(props) {
@@ -60,11 +60,14 @@ class Subject extends Component {
 
   render() {
     return (
-      <div>
+      <div style = {{ padding: '20px' }}>
         <h1>{ this.props.subject }</h1>
 
         { this.props.currentUser ?
-        <form onSubmit = { this.handleSubmit } >
+        <form
+          onSubmit = { this.handleSubmit }
+          style = {{ marginBottom: '20px' }}
+        >
           <TextField
             floatingLabelText = 'add link'
             ref = { (ref) => this.linkInput = ref }

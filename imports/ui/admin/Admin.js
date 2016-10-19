@@ -40,7 +40,7 @@ class Admin extends Component {
 
   render() {
     return (
-      <div>
+      <div style = {{ padding: '20px' }}>
         <h1>Admin Page</h1>
 
         <div>

@@ -60,30 +60,29 @@ export default class SubjectLink extends Component {
         zDepth = { 2 }
         style = { styles.linkWrapper }
         >
-        { this.props.currentUser && (this.props.currentUser._id === this.props.item.createdBy._id) ?
-        <button onClick = { this.deleteThisSubject } >
-          &times;
-        </button>
-        :
-        <div></div>
-        }
+        <div style = { styles.flex }>
+          { this.props.currentUser && (this.props.currentUser._id === this.props.item.createdBy._id) ?
+            <button
+              onClick = { this.deleteThisSubject }
+              style = { styles.mgRight }
+            >
+              &times;
+            </button>
+            :
+            <div>
+              <Checkbox
+                checkedIcon = { <ActionFavorite /> }
+                uncheckedIcon = { <ActionFavoriteBorder /> }
+                onCheck = { this.handleLike }
+                checked = { this.state.like }
+                />
+            </div>
+          }
 
-        <a href = { this.props.item.link } >{ this.props.item.description }</a>
-
-        { this.props.currentUser ?
-        <div>
-          <Checkbox
-            checkedIcon = { <ActionFavorite /> }
-            uncheckedIcon = { <ActionFavoriteBorder /> }
-            onCheck = { this.handleLike }
-            checked = { this.state.like }
-          />
+          <a href = { this.props.item.link } >{ this.props.item.description }</a>
         </div>
-        :
-        <div></div>
-        }
 
-        <span>Rating: { this.props.item.rating }</span>
+        <div>Rating: { this.props.item.rating }</div>
       </Paper>
     )
   }
