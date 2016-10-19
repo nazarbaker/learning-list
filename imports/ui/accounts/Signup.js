@@ -28,7 +28,10 @@ export default class Signup extends Component {
     Accounts.createUser({
       username: this.userNameInput.input.value,
       email: this.emailInput.input.value,
-      password: this.passwordInput.input.value
+      password: this.passwordInput.input.value,
+      profile: {
+        likedItems: []
+      }
     }, this.handleErrors)
   }
 
