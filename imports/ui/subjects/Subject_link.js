@@ -20,7 +20,7 @@ export default class SubjectLink extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      like: false
+      like: this.props.currentUser && (this.props.currentUser.profile.likedItems.indexOf(this.props.item._id) !== -1)
     }
 
     this.handleLike = this.handleLike.bind(this)
@@ -30,7 +30,7 @@ export default class SubjectLink extends Component {
   componentDidMount() {
     if (this.props.currentUser) {
       setTimeout( () => {
-        this.setState({ like: (this.props.currentUser.profile.likedItems.indexOf(this.props.item._id) !== -1) })
+        this.setState({ like: this.props.currentUser && (this.props.currentUser.profile.likedItems.indexOf(this.props.item._id) !== -1) })
       }, 500)
     }
   }

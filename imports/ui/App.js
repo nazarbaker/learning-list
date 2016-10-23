@@ -50,8 +50,8 @@ class App extends React.Component {
       <MuiThemeProvider>
         <div>
           <AppBar
-            title = 'Title'
-            iconElementLeft = { <IconButton><NavigationClose /></IconButton> }
+            title = { <a href='/' className='title'>Learning list</a> }
+            iconElementLeft = { <IconButton></IconButton> }
             iconElementRight = {
               <div style = { styles.menuWrapper }>
                 { this.props.currentUser ?
@@ -63,7 +63,9 @@ class App extends React.Component {
 
                 <IconMenu
                   iconButtonElement = {
-                    <IconButton><MoreVertIcon /></IconButton>
+                    <IconButton>
+                      <MoreVertIcon color='#ffffff'/>
+                    </IconButton>
                   }
                   targetOrigin={{ horizontal: 'right', vertical: 'top' }}
                   anchorOrigin={{ horizontal: 'right', vertical: 'top' }}

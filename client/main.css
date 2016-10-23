@@ -3,6 +3,11 @@ html, body {
   margin: 0!important;
 }
 
+.title {
+  text-decoration: none;
+  color: #ffffff;
+}
+
 /* media query */
 @media (max-width: 1000px) {
   .tab {
