@@ -88,8 +88,7 @@ class Subject extends Component {
             primary = { true }
           />
         </form>
-        :
-        <div></div>
+        : ''
         }
 
         { this.renderLanguages() }

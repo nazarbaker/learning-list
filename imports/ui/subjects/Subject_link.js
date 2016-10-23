@@ -17,7 +17,7 @@ export default class SubjectLink extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      like: (this.props.currentUser.profile.likedItems.indexOf(this.props.item._id) !== -1)
+      like: this.props.currentUser ? (this.props.currentUser.profile.likedItems.indexOf(this.props.item._id) !== -1) : false
     }
 
     this.handleLike = this.handleLike.bind(this)
@@ -61,22 +61,27 @@ export default class SubjectLink extends Component {
         style = { styles.linkWrapper }
         >
         <div style = { styles.flex }>
-          { this.props.currentUser && (this.props.currentUser._id === this.props.item.createdBy._id) ?
-            <button
-              onClick = { this.deleteThisSubject }
-              style = { styles.mgRight }
-            >
-              &times;
-            </button>
-            :
+          { this.props.currentUser ?
             <div>
-              <Checkbox
-                checkedIcon = { <ActionFavorite /> }
-                uncheckedIcon = { <ActionFavoriteBorder /> }
-                onCheck = { this.handleLike }
-                checked = { this.state.like }
-                />
+              { this.props.currentUser._id === this.props.item.createdBy._id ?
+                <button
+                  onClick = { this.deleteThisSubject }
+                  style = { styles.mgRight }
+                  >
+                  &times;
+                </button>
+                :
+                <div>
+                  <Checkbox
+                    checkedIcon = { <ActionFavorite /> }
+                    uncheckedIcon = { <ActionFavoriteBorder /> }
+                    onCheck = { this.handleLike }
+                    checked = { this.state.like }
+                    />
+                </div>
+              }
             </div>
+            : ''
           }
 
           <a href = { this.props.item.link } >{ this.props.item.description }</a>

@@ -60,8 +60,7 @@ class App extends React.Component {
                 <div style = { styles.userName }>
                   <span className="user-name">{this.props.currentUser.username}</span>
                 </div>
-                :
-                <div></div>
+                : ''
                 }
 
                 <IconMenu
