@@ -1,8 +1,19 @@
+import { Meteor } from 'meteor/meteor'
 import { Mongo } from 'meteor/mongo'
+import { check } from 'meteor/check'
 
 export const LearningTopics = new Mongo.Collection('learningTopics')
 
-// add item to LearningLanguages collection
+Meteor.methods({
+  'learningTopics.insert'(topic, subject) {
+    check(topic, String)
+    check(subject, String)
 
-// LearningTopics.insert({topic: 'languages', name: 'Ruby'});
-// LearningTopics.remove({_id: 'uoXBX2rncDfxyacx5'});
+    LearningTopics.insert({ topic, subject })
+  },
+  'learningTopics.remove'(topicId) {
+    check(topicId, String);
+
+    LearningTopics.remove(topicId);
+  }
+});

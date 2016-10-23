@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { createContainer } from 'meteor/react-meteor-data'
 
+import { Meteor } from 'meteor/meteor'
+
 // material-ui
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
@@ -28,13 +30,8 @@ class Subject extends Component {
     event.preventDefault()
     if (this.linkInput.input.value && this.descriptionInput.input.value) {
       // save link in db
-      SubjectLinks.insert({
-        type: this.props.subject,
-        link: this.linkInput.input.value,
-        description: this.descriptionInput.input.value,
-        createdBy: this.props.currentUser,
-        rating: 0
-      })
+      Meteor.call('subjectLinks.insert', this.props.subject, this.linkInput.input.value, this.descriptionInput.input.value, this.props.currentUser)
+
       this.linkInput.input.value = null
       this.descriptionInput.input.value = null
     } else {
@@ -76,7 +73,7 @@ class Subject extends Component {
           />
           <br />
           <TextField
-            floatingLabelText  = 'Description'
+            floatingLabelText  = 'description'
             ref = { (ref) => this.descriptionInput = ref }
             errorText = { this.state.descriptionError }
             onFocus = { this.deleteErrors }

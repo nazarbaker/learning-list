@@ -1,4 +1,7 @@
 import React, { Component, PropTypes } from 'react'
+
+import { Meteor } from 'meteor/meteor'
+
 // material-ui
 import Paper from 'material-ui/Paper'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
@@ -17,11 +20,19 @@ export default class SubjectLink extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      like: this.props.currentUser ? (this.props.currentUser.profile.likedItems.indexOf(this.props.item._id) !== -1) : false
+      like: false
     }
 
     this.handleLike = this.handleLike.bind(this)
     this.deleteThisSubject = this.deleteThisSubject.bind(this)
+  }
+
+  componentDidMount() {
+    if (this.props.currentUser) {
+      setTimeout( () => {
+        this.setState({ like: (this.props.currentUser.profile.likedItems.indexOf(this.props.item._id) !== -1) })
+      }, 500)
+    }
   }
 
   handleLike(event, value) {
@@ -29,7 +40,9 @@ export default class SubjectLink extends Component {
 
     if (value) {
       this.setState({ like: true })
-      SubjectLinks.update({ _id: itemId }, {$inc: { rating: 1} })
+
+      Meteor.call('subjectLinks.setLiked', itemId, 1)
+
       Accounts.users.update(
         {
           _id: Accounts.userId()
@@ -39,7 +52,9 @@ export default class SubjectLink extends Component {
       )
     } else {
       this.setState({ like: false })
-      SubjectLinks.update({ _id: this.props.item._id }, {$inc: { rating: -1} })
+
+      Meteor.call('subjectLinks.setLiked', itemId, -1)
+
       Accounts.users.update(
         {
           _id: Accounts.userId()
@@ -51,7 +66,7 @@ export default class SubjectLink extends Component {
   }
 
   deleteThisSubject() {
-    SubjectLinks.remove(this.props.item._id);
+    Meteor.call('subjectLinks.remove', this.props.item._id)
   }
 
   render() {

@@ -38,7 +38,6 @@ class App extends React.Component {
   }
 
   handleLoginOpen() {
-    console.log(this.props.currentUser)
     this.refs.login.setState({ open: true })
   }
 
@@ -47,7 +46,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.props.currentUser)
     return (
       <MuiThemeProvider>
         <div>

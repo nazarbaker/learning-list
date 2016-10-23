@@ -1,6 +1,8 @@
 // React Dependencies
 import React, { Component, PropTypes } from 'react'
 import { createContainer } from 'meteor/react-meteor-data'
+
+import { Meteor } from 'meteor/meteor'
 // Material-ui Dependencies
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 import TextField from 'material-ui/TextField'
@@ -29,7 +31,7 @@ class Admin extends Component {
   handleSubmit(event) {
     event.preventDefault()
 
-    LearningTopics.insert({ topic: this.state.value, subject: this.topicInput.input.value })
+    Meteor.call('learningTopics.insert', this.state.value, this.topicInput.input.value)
   }
 
   renderLearnItems() {
