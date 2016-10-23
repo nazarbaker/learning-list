@@ -43,46 +43,52 @@ class Admin extends Component {
   render() {
     return (
       <div style = {{ padding: '20px' }}>
-        <h1>Admin Page</h1>
-
+        {(this.props.currentUser && this.props.currentUser.username === 'admin') ?
         <div>
-          <RadioButtonGroup
-            name = 'learningTopic'
-            onChange = { this.setLearningTopic }
-            defaultSelected = 'languages'
-            >
-            <RadioButton
-              value = 'languages'
-              label = 'Languages / Technologies'
-            />
-            <RadioButton
-              value = 'databases'
-              label = 'Database Management Systems'
-            />
-            <RadioButton
-              value = 'methodologies'
-              label = 'Methodologies'
-            />
-            <RadioButton
-              value = 'platforms'
-              label = 'Platforms / Frameworks / Tools'
-            />
-          </RadioButtonGroup>
+          <h1>Admin Page</h1>
 
-          <form onSubmit = { this.handleSubmit } >
-            <TextField
-              floatingLabelText = 'add topic'
-              ref = { (ref) => this.topicInput = ref }
-            />
-            <FlatButton
-              type = 'submit'
-              label = 'Create'
-              primary = { true }/>
-          </form>
+          <div>
+            <RadioButtonGroup
+              name = 'learningTopic'
+              onChange = { this.setLearningTopic }
+              defaultSelected = 'languages'
+              >
+              <RadioButton
+                value = 'languages'
+                label = 'Languages / Technologies'
+                />
+              <RadioButton
+                value = 'databases'
+                label = 'Database Management Systems'
+                />
+              <RadioButton
+                value = 'methodologies'
+                label = 'Methodologies'
+                />
+              <RadioButton
+                value = 'platforms'
+                label = 'Platforms / Frameworks / Tools'
+                />
+            </RadioButtonGroup>
+
+            <form onSubmit = { this.handleSubmit } >
+              <TextField
+                floatingLabelText = 'add topic'
+                ref = { (ref) => this.topicInput = ref }
+                />
+              <FlatButton
+                type = 'submit'
+                label = 'Create'
+                primary = { true }/>
+            </form>
+          </div>
+          <div>
+            { this.renderLearnItems() }
+          </div>
         </div>
-        <div>
-          { this.renderLearnItems() }
-        </div>
+        :
+        <h2>Sorry, this page only administrator!</h2>
+        }
       </div>
     )
   }
@@ -94,8 +100,9 @@ Admin.propTypes = {
 
 export default createContainer(() => {
   Meteor.subscribe('learningTopics')
-  
+
   return {
-    learningTopics: LearningTopics.find({}).fetch(),
+    currentUser: Meteor.user(),
+    learningTopics: LearningTopics.find({}).fetch()
   }
 }, Admin)
