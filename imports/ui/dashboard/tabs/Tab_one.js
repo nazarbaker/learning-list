@@ -41,7 +41,9 @@ TabOne.propTypes = {
 };
 
 export default createContainer(() => {
+  Meteor.subscribe('learningTopics')
+
   return {
-    learningTopics: LearningTopics.find({topic: 'languages'}).fetch(),
+    learningTopics: LearningTopics.find({topic: 'languages'}).fetch()
   }
 }, TabOne)

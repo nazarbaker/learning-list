@@ -7,7 +7,7 @@ import { styles } from './assets/styles.js'
 export default class LearningTopic extends Component {
 
   deleteThisTopic() {
-    LearningTopics.remove(this.props.item._id);
+    Meteor.call('learningTopics.remove', this.props.item._id)
   }
 
   render() {

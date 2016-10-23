@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { createContainer } from 'meteor/react-meteor-data'
 
+import { Meteor } from 'meteor/meteor'
+
 // material-ui
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
@@ -10,7 +12,7 @@ import { SubjectLinks } from '../../api/subject_links.js'
 // components
 import SubjectLink from './Subject_link.js'
 // styles
-import styles from './assets/styles.js'
+import { styles } from './assets/styles.js'
 
 class Subject extends Component {
   constructor(props) {
@@ -28,13 +30,8 @@ class Subject extends Component {
     event.preventDefault()
     if (this.linkInput.input.value && this.descriptionInput.input.value) {
       // save link in db
-      SubjectLinks.insert({
-        type: this.props.subject,
-        link: this.linkInput.input.value,
-        description: this.descriptionInput.input.value,
-        createdBy: this.props.currentUser,
-        rating: 0
-      })
+      Meteor.call('subjectLinks.insert', this.props.subject, this.linkInput.input.value, this.descriptionInput.input.value, this.props.currentUser)
+
       this.linkInput.input.value = null
       this.descriptionInput.input.value = null
     } else {
@@ -60,11 +57,14 @@ class Subject extends Component {
 
   render() {
     return (
-      <div>
+      <div style = {{ padding: '20px' }}>
         <h1>{ this.props.subject }</h1>
 
         { this.props.currentUser ?
-        <form onSubmit = { this.handleSubmit } >
+        <form
+          onSubmit = { this.handleSubmit }
+          style = {{ marginBottom: '20px' }}
+        >
           <TextField
             floatingLabelText = 'add link'
             ref = { (ref) => this.linkInput = ref }
@@ -73,7 +73,7 @@ class Subject extends Component {
           />
           <br />
           <TextField
-            floatingLabelText  = 'Description'
+            floatingLabelText  = 'description'
             ref = { (ref) => this.descriptionInput = ref }
             errorText = { this.state.descriptionError }
             onFocus = { this.deleteErrors }
@@ -85,8 +85,7 @@ class Subject extends Component {
             primary = { true }
           />
         </form>
-        :
-        <div></div>
+        : ''
         }
 
         { this.renderLanguages() }
@@ -100,7 +99,8 @@ Subject.propTypes = {
 };
 
 export default createContainer(() => {
-  const subject = FlowRouter.getParam('subject');
+  const subject = FlowRouter.getParam('subject')
+  Meteor.subscribe('subjectLinks')
 
   return {
     subjectLinks: SubjectLinks.find({type: subject}, { sort: { rating: -1 } }).fetch(),
