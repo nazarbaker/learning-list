@@ -93,6 +93,8 @@ Admin.propTypes = {
 };
 
 export default createContainer(() => {
+  Meteor.subscribe('learningTopics')
+  
   return {
     learningTopics: LearningTopics.find({}).fetch(),
   }

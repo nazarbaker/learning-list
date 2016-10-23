@@ -99,7 +99,8 @@ Subject.propTypes = {
 };
 
 export default createContainer(() => {
-  const subject = FlowRouter.getParam('subject');
+  const subject = FlowRouter.getParam('subject')
+  Meteor.subscribe('subjectLinks')
 
   return {
     subjectLinks: SubjectLinks.find({type: subject}, { sort: { rating: -1 } }).fetch(),

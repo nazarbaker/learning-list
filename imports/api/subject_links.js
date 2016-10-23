@@ -4,6 +4,13 @@ import { check } from 'meteor/check'
 
 export const SubjectLinks = new Mongo.Collection('subjectLinks')
 
+if (Meteor.isServer) {
+  // This code only runs on the server
+  Meteor.publish('subjectLinks', function subjectLinksPublication() {
+    return SubjectLinks.find();
+  });
+}
+
 Meteor.methods({
   'subjectLinks.insert'(type, link, description, createdBy) {
     check(type, String)
