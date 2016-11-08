@@ -4,4 +4,4 @@
     meteor
 
 #### Deploy on heroku
-[https://mylearninglist.herokuapp.co] (https://mylearninglist.herokuapp.co "learning list")    
+[https://mylearninglist.herokuapp.com] (https://mylearninglist.herokuapp.com "learning list")    
